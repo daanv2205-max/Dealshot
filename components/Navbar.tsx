@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
       {/* Contact Top Bar */}
-      <div className="bg-[#EE4D2D] text-white py-1.5 px-4 text-[10px] md:text-xs">
+      <div className={`${scrolled ? 'bg-[#EE4D2D]' : 'bg-[#EE4D2D]/90 backdrop-blur-sm'} text-white py-1.5 px-4 text-[10px] md:text-xs transition-colors duration-300`}>
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4">
             <a href="mailto:daanv2205@gmail.com" className="flex items-center gap-1 hover:underline">
@@ -32,21 +32,25 @@ const Navbar: React.FC = () => {
               <span>fb.com/Tinhr92</span>
             </a>
           </div>
-          <div className="font-medium hidden xs:block">T-INFINITY SHOP - KHO DEAL CHÍNH HÃNG</div>
+          <div className="font-bold hidden xs:block tracking-widest uppercase opacity-90">T-INFINITY SHOP</div>
         </div>
       </div>
 
       {/* Main Navbar */}
       <nav className={`transition-all duration-300 ${
-        scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-3' : 'bg-white py-4'
+        scrolled 
+          ? 'bg-white/95 backdrop-blur-md shadow-lg py-3' 
+          : 'bg-transparent py-5'
       }`}>
         <div className="container mx-auto px-4 flex items-center justify-between">
           <a href="#" className="flex items-center gap-2">
-            <div className="w-9 h-9 md:w-10 md:h-10 bg-[#EE4D2D] rounded-xl flex items-center justify-center text-white font-black text-lg md:text-xl shadow-lg shadow-orange-200">T</div>
-            <span className="font-black text-lg md:text-xl tracking-tight text-gray-900">T-INFINITY <span className="text-[#EE4D2D]">SHOP</span></span>
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-[#EE4D2D] rounded-xl flex items-center justify-center text-white font-black text-lg md:text-xl shadow-lg shadow-orange-500/30">T</div>
+            <span className={`font-black text-lg md:text-xl tracking-tight transition-colors duration-300 ${scrolled ? 'text-gray-900' : 'text-white'}`}>
+              T-INFINITY <span className="text-[#EE4D2D]">SHOP</span>
+            </span>
           </a>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-600">
+          <div className={`hidden md:flex items-center gap-8 text-sm font-bold transition-colors duration-300 ${scrolled ? 'text-gray-600' : 'text-white/90'}`}>
             <a href="#" className="hover:text-[#EE4D2D] transition-colors">Trang chủ</a>
             <a href="#catalog" className="hover:text-[#EE4D2D] transition-colors">Sản phẩm</a>
             <a href="https://web.facebook.com/Tinhr92" target="_blank" rel="noopener noreferrer" className="hover:text-[#EE4D2D] transition-colors">Liên hệ</a>
@@ -54,12 +58,16 @@ const Navbar: React.FC = () => {
 
           <div className="flex items-center gap-4">
             <div className="relative group cursor-pointer hidden sm:block">
-              <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-[#EE4D2D] bg-orange-50 px-3 py-1.5 rounded-full border border-orange-100 uppercase tracking-wider">
-                <span className="w-2 h-2 bg-[#EE4D2D] rounded-full animate-pulse"></span>
-                Deal mới mỗi ngày
+              <div className={`flex items-center gap-2 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full border transition-all uppercase tracking-wider ${
+                scrolled 
+                  ? 'text-[#EE4D2D] bg-orange-50 border-orange-100' 
+                  : 'text-white bg-white/10 border-white/20 backdrop-blur-sm'
+              }`}>
+                <span className={`w-2 h-2 rounded-full animate-pulse ${scrolled ? 'bg-[#EE4D2D]' : 'bg-orange-400'}`}></span>
+                Live Deals
               </div>
             </div>
-            <button className="p-2 text-gray-500 hover:text-[#EE4D2D] md:hidden">
+            <button className={`p-2 transition-colors md:hidden ${scrolled ? 'text-gray-500' : 'text-white'}`}>
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
               </svg>

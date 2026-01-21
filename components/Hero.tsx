@@ -3,28 +3,89 @@ import React from 'react';
 import Button from './Button';
 
 const Hero: React.FC = () => {
-  return (
-    <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-white">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 -mr-24 -mt-24 w-96 h-96 bg-orange-100 rounded-full blur-3xl opacity-50"></div>
-      <div className="absolute bottom-0 left-0 -ml-24 -mb-24 w-96 h-96 bg-orange-50 rounded-full blur-3xl opacity-50"></div>
+  // Generate random properties for stars to ensure a natural look
+  const stars = Array.from({ length: 50 }).map((_, i) => ({
+    id: i,
+    top: `${Math.random() * 100}%`,
+    left: `${Math.random() * 100}%`,
+    size: Math.random() * 2 + 1,
+    duration: Math.random() * 3 + 2,
+    delay: Math.random() * 5,
+  }));
 
-      <div className="container mx-auto px-4 relative z-10 text-center">
-        <div className="inline-flex items-center gap-2 bg-orange-50 border border-orange-100 px-3 py-1 rounded-full text-[#EE4D2D] text-sm font-semibold mb-6 animate-fade-in">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
-          Badge: Link Sản Phẩm Chính Hãng
+  return (
+    <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-black">
+      <style>
+        {`
+          @keyframes drift {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(-1%, 1%); }
+            100% { transform: translate(0, 0); }
+          }
+          @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+          }
+          .star-field {
+            animation: drift 60s ease-in-out infinite;
+          }
+          .star {
+            animation: twinkle var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+          }
+        `}
+      </style>
+
+      {/* Galaxy Background Image */}
+      <div 
+        className="absolute inset-0 z-0 opacity-70 bg-cover bg-center bg-no-repeat scale-110"
+        style={{ 
+          backgroundImage: 'url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2047&auto=format&fit=crop")',
+          backgroundAttachment: 'fixed'
+        }}
+      ></div>
+      
+      {/* Gradient Overlay for Readability */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
+      
+      {/* Dynamic Star Field Overlay */}
+      <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden star-field">
+        {stars.map((star) => (
+          <div
+            key={star.id}
+            className="absolute bg-white rounded-full star"
+            style={{
+              top: star.top,
+              left: star.left,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              '--duration': `${star.duration}s`,
+              '--delay': `${star.delay}s`,
+            } as React.CSSProperties}
+          />
+        ))}
+        {/* Larger glowing nebulas stars */}
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-orange-200 rounded-full blur-[2px] animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/5 w-3 h-3 bg-blue-200 rounded-full blur-[3px] animate-pulse delay-700"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-20 text-center">
+        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-orange-300 text-[10px] md:text-xs font-bold mb-4 animate-fade-in shadow-xl">
+          <span className="flex h-1.5 w-1.5 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-500"></span>
+          </span>
+          CHỌN LỌC SẢN PHẨM CHÍNH HÃNG 100%
         </div>
         
-        <h1 className="text-4xl md:text-6xl font-black text-gray-900 leading-tight mb-6">
-          Deal Hot Mỗi Ngày <br/>
-          <span className="text-[#EE4D2D]">Mua Đúng Giá, Đúng Chỗ</span>
+        <h1 className="text-3xl md:text-5xl font-black text-white leading-tight mb-4 drop-shadow-2xl">
+          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600">T-INFINITY</span>
+          Săn Deal Vô Tận
         </h1>
         
-        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Tổng hợp những sản phẩm chất lượng nhất từ Shopee với mức giá ưu đãi cực sốc. 
-          Tiết kiệm thời gian, tối ưu ngân sách cho gia đình bạn.
+        <p className="text-sm md:text-base text-gray-300 max-w-xl mx-auto mb-8 leading-relaxed font-medium">
+          Khám phá vũ trụ ưu đãi từ Shopee Mall. 
+          Lọc ra những "viên kim cương" giá hời nhất giữa ngân hà sản phẩm.
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -33,11 +94,14 @@ const Hero: React.FC = () => {
               const el = document.getElementById('catalog');
               el?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="text-lg px-10"
+            className="text-sm px-8 py-3 shadow-[0_0_20px_rgba(238,77,45,0.3)] hover:shadow-[0_0_30px_rgba(238,77,45,0.5)]"
           >
-            Xem deal hot hôm nay
+            SĂN DEAL NGAY
           </Button>
-          <p className="text-sm text-gray-400 italic">Cập nhật 5 phút trước</p>
+          <div className="flex flex-col items-center sm:items-start">
+            <span className="text-[10px] text-orange-200/60 uppercase tracking-widest font-black">Real-time Update</span>
+            <p className="text-xs text-gray-400">Vừa cập nhật</p>
+          </div>
         </div>
       </div>
     </section>
